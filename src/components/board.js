@@ -14,7 +14,6 @@ export class Board extends React.Component {
         } else if (!hasShip && wasShot) {
 			displayText = 'O';
         }
-        //else if (hasShip && !wasShot) { displayText = this.props.ships[i]; } // TODO - make it blank, this is just useful debugging.
 
 		return (
 			<Cell
@@ -41,7 +40,6 @@ export class Board extends React.Component {
 				</div>
 			);
 		}
-		table = <div>{table}</div>;
 
 		return <div>{table}</div>;
 	}
