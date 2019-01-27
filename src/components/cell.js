@@ -1,8 +1,8 @@
 import React from 'react';
 
 export function Cell(props) {
-	return (
-		<button className="cell" onClick={props.onClick}>
+    return (
+        <button className={props.className} onClick={props.onClick}>
 			{props.value}
 		</button>
 	);

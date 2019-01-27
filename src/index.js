@@ -12,7 +12,6 @@ class Battleships extends React.Component {
 				</div>
 				<div className="game-info">
 					<div>{/* status */}</div>
-                    <ol>{/* TODO */}</ol>
                     <button className="newgame" onClick={() => this.handleNewGame()}>
                         New Game
                     </button>

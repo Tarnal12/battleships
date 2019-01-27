@@ -114,20 +114,23 @@ export class Board extends React.Component {
 		var hasShip = this.state.ships[i];
 		var wasShot = this.state.shots[i];
 
-		var display = '';
+        var displayText = '';
+        var cellClass = "cell";
 		if (hasShip && wasShot) {
-			display = 'H';
+            displayText = 'H';
+            cellClass += " hit";
 		} else if (hasShip && !wasShot) {
-			display = this.state.ships[i]; // TODO - make it blank, this is just useful debugging.
+            displayText = this.state.ships[i]; // TODO - make it blank, this is just useful debugging.
 		} else if (!hasShip && wasShot) {
-			display = 'M';
-		}
+            displayText = 'M';
+        }
 
 		return (
 			<Cell
-				key={'Cell' + i}
-				value={display}
-				onClick={() => this.handleCellClick(i)}
+                key={'Cell' + i}
+                className={cellClass}
+                value={displayText}
+                onClick={() => this.handleCellClick(i)}
 			/>
 		);
 	}

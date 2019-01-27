@@ -21,6 +21,11 @@ body {
     padding: 0;
 }
 
+.hit {
+    background: #2559c3;
+    color: red;
+}
+
     .cell:focus {
         outline: none;
     }
