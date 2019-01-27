@@ -3,6 +3,10 @@ body {
     margin: 20px;
 }
 
+.sitrep {
+    color: red;
+}
+
 .board-row:after {
     clear: both;
     content: "";
@@ -19,6 +23,7 @@ body {
     margin-right: -1px;
     margin-top: -1px;
     padding: 0;
+    font-weight: bold;
 }
 
 .hit {
@@ -26,6 +31,6 @@ body {
     color: red;
 }
 
-    .cell:focus {
-        outline: none;
-    }
+.cell:focus {
+    outline: none;
+}
