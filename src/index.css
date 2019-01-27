@@ -21,6 +21,6 @@ body {
     padding: 0;
 }
 
-.cell:focus {
-    outline: none;
-}
+    .cell:focus {
+        outline: none;
+    }

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { Board } from './components/board'
+import { Board } from './components/board';
 
 class Battleships extends React.Component {
     render() {
@@ -21,7 +21,4 @@ class Battleships extends React.Component {
 
 // ========================================
 
-ReactDOM.render(
-    <Battleships />,
-    document.getElementById('root')
-);
+ReactDOM.render(<Battleships />, document.getElementById('root'));
