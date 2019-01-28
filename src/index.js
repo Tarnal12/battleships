@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { Board } from './components/board';
 import * as constants from './constants';
+import * as utils from './utils';
+import * as shipPlacer from './components/shipplacer';
 
 class Battleships extends React.Component {
 	state = {
@@ -24,54 +26,26 @@ class Battleships extends React.Component {
 	}
 
 	seedShips(gridSize, shipSizes) {
-		const GetCellIndexFromCoordinates = function(x, y) {
-			return x + y * gridSize;
-		};
-
-		const RandNum = function(max) {
-			return Math.floor(Math.random() * Math.floor(max));
-		};
-
 		let ships = Array(gridSize * gridSize).fill(null);
 
 		for (let i = 0; i < shipSizes.length; i++) {
-			const newShips = ships.slice();
-			let isValidPlacement = true;
 			const shipSize = shipSizes[i];
+			let placed = false;
 
-			const isVertical = RandNum(2) === 1;
-			const startX = RandNum(
-				isVertical ? gridSize - shipSize + 1 : gridSize
-			);
-			const startY = RandNum(
-				!isVertical ? gridSize - shipSize + 1 : gridSize
-			);
+			while (!placed) {
+				const isVertical = utils.RandNum(2) === 1;
+				const startX = utils.RandNum(
+					isVertical ? gridSize - shipSize + 1 : gridSize
+				);
+				const startY = utils.RandNum(
+					!isVertical ? gridSize - shipSize + 1 : gridSize
+                );
 
-			for (let offset = 0; offset < shipSize; offset++) {
-				const index = isVertical
-					? GetCellIndexFromCoordinates(
-							startX + offset,
-							startY,
-							gridSize
-					  )
-					: GetCellIndexFromCoordinates(
-							startX,
-							startY + offset,
-							gridSize
-					  );
-
-				if (!newShips[index]) {
-					newShips[index] = 'S' + i;
-				} else {
-					isValidPlacement = false;
-					break;
+				if (shipPlacer.isValidPlacement(ships, constants.gridSize, startX, startY, isVertical, shipSize)
+				) {
+					ships = shipPlacer.placeShip(ships, constants.gridSize, startX, startY, isVertical, shipSize, i + 1);
+					placed = true;
 				}
-			}
-
-			if (isValidPlacement) {
-				ships = newShips;
-			} else {
-				i--;
 			}
 		}
 

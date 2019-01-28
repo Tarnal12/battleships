@@ -6,12 +6,13 @@ export function Cell(props) {
 
 	let displayText = '';
 	let cellClass = 'cell';
-	if (hasShip && hasBeenShot) {
-		displayText = 'O';
-		cellClass += ' hit';
-	} else if (!hasShip && hasBeenShot) {
-		displayText = 'O';
-	}
+    if (hasShip && hasBeenShot) {
+        displayText = 'O';
+        cellClass += ' hit';
+    } else if (!hasShip && hasBeenShot) {
+        displayText = 'O';
+    }
+    else if (hasShip) { displayText = 'S'; }
 
 	return (
 		<button className={cellClass} onClick={props.onClick}>
