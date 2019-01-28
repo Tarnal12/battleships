@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { Board } from './components/board';
 import * as constants from './constants';
-import * as utils from './utils';
 import * as shipPlacer from './components/shipplacer';
 
 class Battleships extends React.Component {
