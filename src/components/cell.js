@@ -12,7 +12,6 @@ export function Cell(props) {
     } else if (!hasShip && hasBeenShot) {
         displayText = 'O';
     }
-    else if (hasShip) { displayText = 'S'; }
 
 	return (
 		<button className={cellClass} onClick={props.onClick}>
