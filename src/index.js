@@ -71,7 +71,6 @@ class Battleships extends React.Component {
 	}
 
 	handleCellClick(i) {
-		let ships = this.state.ships.slice();
         let shots = this.state.shots.slice();
 		let lastEvent = null;
 		let turnCount = this.state.turnCount;
@@ -80,14 +79,14 @@ class Battleships extends React.Component {
 			return;
 		} else {
 			shots[i] = true;
-			if (ships[i]) {
+            if (this.state.ships[i]) {
 				let shipDestroyed = true;
                 let allShipsDestroyed = true;
-				for (const index in ships) {
-					if (ships[index] === ships[i] && !shots[index]) {
+                for (const index in this.state.ships) {
+                    if (this.state.ships[index] === this.state.ships[i] && !shots[index]) {
 						shipDestroyed = false;
 						allShipsDestroyed = false;
-					} else if (ships[index] && !shots[index]) {
+                    } else if (this.state.ships[index] && !shots[index]) {
 						allShipsDestroyed = false;
 					}
 				}
@@ -105,7 +104,6 @@ class Battleships extends React.Component {
 		}
 
 		this.setState({
-			ships,
 			shots,
 			turnCount,
 			gameEnded,
