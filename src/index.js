@@ -8,67 +8,62 @@ const gameEvents = {
 	GAME_ENDED: 'All ships destroyed!',
 };
 
+const shipSizes = [5, 4, 4];
+const gridSize = 10;
+
 class Battleships extends React.Component {
-	constructor(props) {
-		super(props);
-		const gridSize = 10;
-		const shipSizes = [5, 4, 4];
-		let ships = this.seedShips(gridSize, shipSizes);
-		this.state = {
-			gridSize: gridSize,
-			shipSizes: shipSizes,
-			turnCount: 1,
-			gameEnded: false,
-			ships: ships,
-			shots: Array(gridSize * gridSize).fill(false),
-			lastEvent: null,
-		};
-	}
+    state = {
+        gridSize: gridSize,
+        shipSizes: shipSizes,
+        turnCount: 1,
+        gameEnded: false,
+        ships: this.seedShips(gridSize, shipSizes),
+        shots: Array(gridSize * gridSize).fill(false),
+        lastEvent: null,
+    }
 
 	handleNewGame() {
 		const gridSize = this.state.gridSize;
 		const shipSizes = this.state.shipSizes;
 		let ships = this.seedShips(gridSize, shipSizes);
 		this.setState({
-			gridSize: gridSize,
+			gridSize,
 			turnCount: 1,
 			gameEnded: false,
-			ships: ships,
+			ships,
 			shots: Array(gridSize * gridSize).fill(false),
 			lastEvent: null,
 		});
 	}
 
 	seedShips(gridSize, shipSizes) {
-		// Func to get the cell index from an x,y coordinate
-		var GetIndex = function(x, y) {
+		const GetCellIndexFromCoordinates = function(x, y) {
 			return x + y * gridSize;
 		};
 
-		// Func to get a random number between between 0 (inclusive) and less than max (exclusive)
-		var RandNum = function(max) {
+		const RandNum = function(max) {
 			return Math.floor(Math.random() * Math.floor(max));
 		};
 
-		var ships = Array(gridSize * gridSize).fill(null);
+		let ships = Array(gridSize * gridSize).fill(null);
 
 		for (let i = 0; i < shipSizes.length; i++) {
-			let newShips = ships.slice();
+			const newShips = ships.slice();
 			let isValidPlacement = true;
 			const shipSize = shipSizes[i];
 
 			const isVertical = RandNum(2) === 1;
-			let startX = RandNum(
+			const startX = RandNum(
 				isVertical ? gridSize - shipSize + 1 : gridSize
 			);
-			let startY = RandNum(
+            const startY = RandNum(
 				!isVertical ? gridSize - shipSize + 1 : gridSize
 			);
 
 			for (let offset = 0; offset < shipSize; offset++) {
-				var index = isVertical
-					? GetIndex(startX + offset, startY, gridSize)
-					: GetIndex(startX, startY + offset, gridSize);
+                const index = isVertical
+                    ? GetCellIndexFromCoordinates(startX + offset, startY, gridSize)
+                    : GetCellIndexFromCoordinates(startX, startY + offset, gridSize);
 
 				if (!newShips[index]) {
 					newShips[index] = 'S' + i;
@@ -89,21 +84,20 @@ class Battleships extends React.Component {
 	}
 
 	handleCellClick(i) {
-		const ships = this.state.ships.slice();
-		const shots = this.state.shots.slice();
+		let ships = this.state.ships.slice();
+        let shots = this.state.shots.slice();
 		const gridSize = this.state.gridSize;
 		let lastEvent = null;
 		let turnCount = this.state.turnCount;
-		let survivorCount = this.state.survivorCount;
 		let gameEnded = this.state.gameEnded;
 		if (i < 0 || i >= gridSize * gridSize || shots[i] || gameEnded) {
 			return;
 		} else {
 			shots[i] = true;
 			if (ships[i]) {
-				var shipDestroyed = true;
-				var allShipsDestroyed = true;
-				for (var index in ships) {
+				let shipDestroyed = true;
+                let allShipsDestroyed = true;
+				for (const index in ships) {
 					if (ships[index] === ships[i] && !shots[index]) {
 						shipDestroyed = false;
 						allShipsDestroyed = false;
@@ -125,12 +119,11 @@ class Battleships extends React.Component {
 		}
 
 		this.setState({
-			ships: ships,
-			shots: shots,
-			turnCount: turnCount,
-			survivorCount: survivorCount,
-			gameEnded: gameEnded,
-			lastEvent: lastEvent,
+			ships,
+			shots,
+			turnCount,
+			gameEnded,
+			lastEvent,
 		});
 	}
 

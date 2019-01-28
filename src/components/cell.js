@@ -1,15 +1,15 @@
 import React from 'react';
 
 export function Cell(props) {
-    var hasShip = props.hasShip;
-    var wasShot = props.wasShot;
+    const hasShip = props.hasShip;
+    const hasBeenShot = props.hasBeenShot;
 
-    var displayText = '';
-    var cellClass = 'cell';
-    if (hasShip && wasShot) {
+    let displayText = '';
+    let cellClass = 'cell';
+    if (hasShip && hasBeenShot) {
         displayText = 'O';
         cellClass += ' hit';
-    } else if (!hasShip && wasShot) {
+    } else if (!hasShip && hasBeenShot) {
         displayText = 'O';
     }
 

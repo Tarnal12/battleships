@@ -3,26 +3,26 @@ import { Cell } from './cell';
 
 export class Board extends React.Component {
 	renderCell(i) {
-		var hasShip = this.props.ships[i];
-		var wasShot = this.props.shots[i];
+		const cellContainsShip = this.props.ships[i];
+        const cellHasBeenShot = this.props.shots[i];
 
 		return (
 			<Cell
 				key={'Cell' + i}
-                wasShot={wasShot}
-                hasShip={hasShip}
+                hasShip={cellContainsShip}
+                hasBeenShot={cellHasBeenShot}
 				onClick={() => this.props.onClick(i)}
 			/>
 		);
 	}
 
 	render() {
-		let table = [];
+		const table = [];
 		const gridSize = this.props.gridSize;
 		for (let y = 0; y < gridSize; y++) {
-			let row = [];
+			const row = [];
 			for (let x = 0; x < gridSize; x++) {
-				let cellIndex = y * gridSize + x;
+				const cellIndex = y * gridSize + x;
 				row.push(this.renderCell(cellIndex));
 			}
 			table.push(
