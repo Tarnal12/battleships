@@ -5,20 +5,20 @@ import { Board } from './components/board';
 import * as constants from './constants';
 
 class Battleships extends React.Component {
-    state = {
-        turnCount: 1,
-        gameEnded: false,
-        ships: this.seedShips(constants.gridSize, constants.shipSizes),
-        shots: Array(constants.gridSize * constants.gridSize).fill(false),
-        lastEvent: null,
-    }
+	state = {
+		turnCount: 1,
+		gameEnded: false,
+		ships: this.seedShips(constants.gridSize, constants.shipSizes),
+		shots: Array(constants.gridSize * constants.gridSize).fill(false),
+		lastEvent: null,
+	};
 
 	handleNewGame() {
 		this.setState({
 			turnCount: 1,
 			gameEnded: false,
-            ships: this.seedShips(constants.gridSize, constants.shipSizes),
-            shots: Array(constants.gridSize * constants.gridSize).fill(false),
+			ships: this.seedShips(constants.gridSize, constants.shipSizes),
+			shots: Array(constants.gridSize * constants.gridSize).fill(false),
 			lastEvent: null,
 		});
 	}
@@ -43,14 +43,22 @@ class Battleships extends React.Component {
 			const startX = RandNum(
 				isVertical ? gridSize - shipSize + 1 : gridSize
 			);
-            const startY = RandNum(
+			const startY = RandNum(
 				!isVertical ? gridSize - shipSize + 1 : gridSize
 			);
 
 			for (let offset = 0; offset < shipSize; offset++) {
-                const index = isVertical
-                    ? GetCellIndexFromCoordinates(startX + offset, startY, gridSize)
-                    : GetCellIndexFromCoordinates(startX, startY + offset, gridSize);
+				const index = isVertical
+					? GetCellIndexFromCoordinates(
+							startX + offset,
+							startY,
+							gridSize
+					  )
+					: GetCellIndexFromCoordinates(
+							startX,
+							startY + offset,
+							gridSize
+					  );
 
 				if (!newShips[index]) {
 					newShips[index] = 'S' + i;
@@ -71,31 +79,39 @@ class Battleships extends React.Component {
 	}
 
 	handleCellClick(i) {
-        let shots = this.state.shots.slice();
+		let shots = this.state.shots.slice();
 		let lastEvent = null;
 		let turnCount = this.state.turnCount;
 		let gameEnded = this.state.gameEnded;
-        if (i < 0 || i >= constants.gridSize * constants.gridSize || shots[i] || gameEnded) {
+		if (
+			i < 0 ||
+			i >= constants.gridSize * constants.gridSize ||
+			shots[i] ||
+			gameEnded
+		) {
 			return;
 		} else {
 			shots[i] = true;
-            if (this.state.ships[i]) {
+			if (this.state.ships[i]) {
 				let shipDestroyed = true;
-                let allShipsDestroyed = true;
-                for (const index in this.state.ships) {
-                    if (this.state.ships[index] === this.state.ships[i] && !shots[index]) {
+				let allShipsDestroyed = true;
+				for (const index in this.state.ships) {
+					if (
+						this.state.ships[index] === this.state.ships[i] &&
+						!shots[index]
+					) {
 						shipDestroyed = false;
 						allShipsDestroyed = false;
-                    } else if (this.state.ships[index] && !shots[index]) {
+					} else if (this.state.ships[index] && !shots[index]) {
 						allShipsDestroyed = false;
 					}
 				}
 
 				if (shipDestroyed) {
-                    lastEvent = constants.gameEvents.SHIP_DESTROYED;
+					lastEvent = constants.gameEvents.SHIP_DESTROYED;
 				}
 				if (allShipsDestroyed) {
-                    lastEvent = constants.gameEvents.GAME_ENDED;
+					lastEvent = constants.gameEvents.GAME_ENDED;
 					gameEnded = true;
 				}
 			} else {
@@ -117,7 +133,7 @@ class Battleships extends React.Component {
 		);
 		let turnReport = null;
 		if (this.state.lastEvent) {
-            turnReport = <div className="sitrep">{this.state.lastEvent}</div>;
+			turnReport = <div className="sitrep">{this.state.lastEvent}</div>;
 		}
 		return (
 			<div className="game">
@@ -126,7 +142,7 @@ class Battleships extends React.Component {
 					<Board
 						ships={this.state.ships}
 						shots={this.state.shots}
-                        gridSize={constants.gridSize}
+						gridSize={constants.gridSize}
 						onClick={i => this.handleCellClick(i)}
 					/>
 				</div>
