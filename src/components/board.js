@@ -6,20 +6,11 @@ export class Board extends React.Component {
 		var hasShip = this.props.ships[i];
 		var wasShot = this.props.shots[i];
 
-		var displayText = '';
-		var cellClass = 'cell';
-        if (hasShip && wasShot) {
-            displayText = 'O';
-            cellClass += ' hit';
-        } else if (!hasShip && wasShot) {
-			displayText = 'O';
-        }
-
 		return (
 			<Cell
 				key={'Cell' + i}
-				className={cellClass}
-				value={displayText}
+                wasShot={wasShot}
+                hasShip={hasShip}
 				onClick={() => this.props.onClick(i)}
 			/>
 		);
