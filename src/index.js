@@ -2,14 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { Board } from './components/board';
-
-const gameEvents = {
-	SHIP_DESTROYED: 'Ship Destroyed!',
-	GAME_ENDED: 'All ships destroyed!',
-};
-
-const shipSizes = [5, 4, 4];
-const gridSize = 10;
+import { shipSizes, gridSize, gameEvents } from './constants'
 
 class Battleships extends React.Component {
     state = {
