@@ -29,24 +29,8 @@ class Battleships extends React.Component {
 		let ships = Array(gridSize * gridSize).fill(null);
 
 		for (let i = 0; i < shipSizes.length; i++) {
-			const shipSize = shipSizes[i];
-			let placed = false;
-
-			while (!placed) {
-				const isVertical = utils.RandNum(2) === 1;
-				const startX = utils.RandNum(
-					isVertical ? gridSize - shipSize + 1 : gridSize
-				);
-				const startY = utils.RandNum(
-					!isVertical ? gridSize - shipSize + 1 : gridSize
-                );
-
-				if (shipPlacer.isValidPlacement(ships, constants.gridSize, startX, startY, isVertical, shipSize)
-				) {
-					ships = shipPlacer.placeShip(ships, constants.gridSize, startX, startY, isVertical, shipSize, i + 1);
-					placed = true;
-				}
-			}
+            const shipSize = shipSizes[i];
+            ships = shipPlacer.placeShipAtRandom(ships, gridSize, shipSize, i + 1);
 		}
 
 		return ships;
