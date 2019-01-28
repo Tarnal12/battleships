@@ -4,16 +4,28 @@ import { Cell } from './cell';
 export class Board extends React.Component {
 	renderCell(i) {
 		const cellContainsShip = this.props.ships[i];
-        const cellHasBeenShot = this.props.shots[i];
+		const cellHasBeenShot = this.props.shots[i];
 
 		return (
 			<Cell
 				key={'Cell' + i}
-                hasShip={cellContainsShip}
-                hasBeenShot={cellHasBeenShot}
+				hasShip={cellContainsShip}
+				hasBeenShot={cellHasBeenShot}
 				onClick={() => this.props.onClick(i)}
 			/>
 		);
+	}
+
+	renderRow(row, rowIndex) {
+		return (
+			<div className="board-row" key={'Row' + rowIndex}>
+				{row}
+			</div>
+		);
+	}
+
+	renderTable(table) {
+		return <div>{table}</div>;
 	}
 
 	render() {
@@ -25,11 +37,7 @@ export class Board extends React.Component {
 				const cellIndex = y * gridSize + x;
 				row.push(this.renderCell(cellIndex));
 			}
-			table.push(
-				<div className="board-row" key={'Row' + y}>
-					{row}
-				</div>
-			);
+			table.push(this.renderRow(row, y));
 		}
 
 		return <div>{table}</div>;

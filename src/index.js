@@ -2,29 +2,23 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { Board } from './components/board';
-import { shipSizes, gridSize, gameEvents } from './constants'
+import * as constants from './constants';
 
 class Battleships extends React.Component {
     state = {
-        gridSize: gridSize,
-        shipSizes: shipSizes,
         turnCount: 1,
         gameEnded: false,
-        ships: this.seedShips(gridSize, shipSizes),
-        shots: Array(gridSize * gridSize).fill(false),
+        ships: this.seedShips(constants.gridSize, constants.shipSizes),
+        shots: Array(constants.gridSize * constants.gridSize).fill(false),
         lastEvent: null,
     }
 
 	handleNewGame() {
-		const gridSize = this.state.gridSize;
-		const shipSizes = this.state.shipSizes;
-		let ships = this.seedShips(gridSize, shipSizes);
 		this.setState({
-			gridSize,
 			turnCount: 1,
 			gameEnded: false,
-			ships,
-			shots: Array(gridSize * gridSize).fill(false),
+            ships: this.seedShips(constants.gridSize, constants.shipSizes),
+            shots: Array(constants.gridSize * constants.gridSize).fill(false),
 			lastEvent: null,
 		});
 	}
@@ -79,11 +73,10 @@ class Battleships extends React.Component {
 	handleCellClick(i) {
 		let ships = this.state.ships.slice();
         let shots = this.state.shots.slice();
-		const gridSize = this.state.gridSize;
 		let lastEvent = null;
 		let turnCount = this.state.turnCount;
 		let gameEnded = this.state.gameEnded;
-		if (i < 0 || i >= gridSize * gridSize || shots[i] || gameEnded) {
+        if (i < 0 || i >= constants.gridSize * constants.gridSize || shots[i] || gameEnded) {
 			return;
 		} else {
 			shots[i] = true;
@@ -100,10 +93,10 @@ class Battleships extends React.Component {
 				}
 
 				if (shipDestroyed) {
-					lastEvent = gameEvents.SHIP_DESTROYED;
+                    lastEvent = constants.gameEvents.SHIP_DESTROYED;
 				}
 				if (allShipsDestroyed) {
-					lastEvent = gameEvents.GAME_ENDED;
+                    lastEvent = constants.gameEvents.GAME_ENDED;
 					gameEnded = true;
 				}
 			} else {
@@ -135,7 +128,7 @@ class Battleships extends React.Component {
 					<Board
 						ships={this.state.ships}
 						shots={this.state.shots}
-						gridSize={this.state.gridSize}
+                        gridSize={constants.gridSize}
 						onClick={i => this.handleCellClick(i)}
 					/>
 				</div>
